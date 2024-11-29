@@ -26,6 +26,7 @@ impl OpenOptions {
     }
 
     /// Open a database at the given path
+    #[tracing::instrument]
     pub async fn open(&self, _path: &str) -> Result<()> {
         Ok(())
     }

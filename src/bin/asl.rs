@@ -1,5 +1,7 @@
 use clap::{Parser, Subcommand};
 use color_eyre::eyre::{self, Result};
+use tracing_forest::ForestLayer;
+use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt, Registry};
 
 #[derive(Parser)]
 #[command(version, about, long_about = None)]
@@ -20,6 +22,10 @@ enum Commands {
 #[tokio::main]
 async fn main() -> Result<(), color_eyre::eyre::Report> {
     color_eyre::install()?;
+    Registry::default()
+        .with(ForestLayer::default())
+        .with(tracing_subscriber::EnvFilter::from_default_env())
+        .init();
     let cli = Cli::parse();
 
     let db_url = cli.db_url.unwrap_or_else(|| ".".to_string());
