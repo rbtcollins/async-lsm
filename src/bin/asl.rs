@@ -17,7 +17,8 @@ enum Commands {
     Info,
 }
 
-fn main() -> Result<(), color_eyre::eyre::Report> {
+#[tokio::main]
+async fn main() -> Result<(), color_eyre::eyre::Report> {
     color_eyre::install()?;
     let cli = Cli::parse();
 
@@ -26,7 +27,9 @@ fn main() -> Result<(), color_eyre::eyre::Report> {
     eprintln!("Database location: {}", db_url);
 
     match &cli.command {
-        Some(Commands::Info) => {}
+        Some(Commands::Info) => {
+            let _db = async_lsm::OpenOptions::new().open(&db_url).await?;
+        }
         None => {
             eyre::bail!("No command specified");
         }
