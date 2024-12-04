@@ -44,7 +44,7 @@ async fn main() -> Result<(), color_eyre::eyre::Report> {
     eprintln!("Database location: {}", db_url);
 
     let storage = match &cli.storage {
-        Storage::File => async_lsm::features::filestorage::FileStorage::default(),
+        Storage::File => async_lsm::features::local_storage::LocalStorage::default(),
     };
 
     match &cli.command {

@@ -4,20 +4,20 @@
 //!
 //! ```rust,no_run
 //! use async_lsm::OpenOptions;
-//! use async_lsm::features::filestorage::FileStorage;
+//! use async_lsm::features::local_storage::LocalStorage;
 //! # async fn run() -> Result<(), ()> {
-//! OpenOptions::new(FileStorage::default()).open("path/to/db").await.unwrap();
+//! OpenOptions::new(LocalStorage::default()).open("path/to/db").await.unwrap();
 //! # Ok(())
 //! # }
 //! ```
 //!
 //! Use crate features to enable different storage backends:
-//! `file` - file storage backend
+//! `local` - local OS filesystem storage backend
 
 pub mod features;
 pub mod storage;
 
-use color_eyre::eyre::Result;
+use eyre::Result;
 
 use storage::Storage;
 
